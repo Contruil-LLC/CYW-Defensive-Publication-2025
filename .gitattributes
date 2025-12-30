@@ -1,0 +1,27 @@
+# Auto detect text files and normalize line endings to LF
+* text=auto eol=lf
+
+# Explicitly declare text files
+*.md text
+*.txt text
+*.json text
+*.yml text
+*.yaml text
+
+# Declare files that should not be normalized
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+
+# Documentation files
+docs/** text
+
+# Git configuration
+.gitattributes text
+.gitignore text
+
+# License files
+LICENSE text

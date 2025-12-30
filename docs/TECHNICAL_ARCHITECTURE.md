@@ -173,12 +173,25 @@ Ensures consistent state across distributed model instances.
 
 ## Key Algorithms
 
+**Note:** The following algorithms are presented as conceptual pseudocode to illustrate the key innovations. Actual implementations may vary based on specific requirements and constraints.
+
 ### Adaptive Model Selection Algorithm
 
 ```python
 def select_model(request, context, constraints):
     """
-    Selects optimal model based on multiple factors
+    Selects optimal model based on multiple factors.
+    
+    'Optimal' is defined as the highest-scoring model based on weighted
+    combination of capability match, performance, cost, and load.
+    
+    Args:
+        request: User request object with query and metadata
+        context: Conversation context with history and state
+        constraints: Performance constraints (max_latency, max_cost)
+    
+    Returns:
+        Selected model object with highest composite score
     """
     # Extract features
     features = {
@@ -223,7 +236,18 @@ def select_model(request, context, constraints):
 ```python
 def transfer_context(source_model, target_model, context):
     """
-    Optimizes context for transfer between models
+    Optimizes context for transfer between models.
+    
+    Transforms context from source model format to target model format,
+    compressing if necessary to fit target's context window constraints.
+    
+    Args:
+        source_model: Model object from which context originates
+        target_model: Model object to which context is being transferred
+        context: Context object with conversation history
+    
+    Returns:
+        Transferred context optimized for target model format and constraints
     """
     # Extract relevant context
     relevant_history = filter_relevant_messages(
@@ -261,7 +285,18 @@ def transfer_context(source_model, target_model, context):
 ```python
 async def orchestrate_parallel(request, models, merge_strategy):
     """
-    Executes request across multiple models in parallel
+    Executes request across multiple models in parallel with timeout and fallback.
+    
+    Async function that distributes requests to multiple models concurrently,
+    handles timeouts and failures, and merges results according to strategy.
+    
+    Args:
+        request: User request to be processed
+        models: List of model objects to execute in parallel
+        merge_strategy: Strategy object with merge() method for result aggregation
+    
+    Returns:
+        Merged result from all model executions, with consistency warnings if needed
     """
     # Prepare sub-requests
     sub_requests = prepare_sub_requests(request, models)
@@ -273,14 +308,18 @@ async def orchestrate_parallel(request, models, merge_strategy):
     ]
     
     # Wait for all with fallback handling
+    # gather_with_fallback: utility that awaits tasks with timeout fallback
     results = await gather_with_fallback(tasks)
     
-    # Merge results
+    # Merge results according to provided strategy
     merged_result = merge_strategy.merge(results)
     
-    # Validate consistency
+    # Validate consistency across results
+    # validate_consistency: checks for contradictions or significant divergence
     if not validate_consistency(results):
-        merged_result['warning'] = 'Inconsistent results detected'
+        # Add warning if results are inconsistent
+        if hasattr(merged_result, '__setitem__'):
+            merged_result['warning'] = 'Inconsistent results detected'
     
     return merged_result
 ```

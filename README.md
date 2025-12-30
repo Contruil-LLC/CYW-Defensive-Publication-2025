@@ -50,12 +50,10 @@ This declaration establishes:
 **Signature**: Timothy I. Wheels  
 **Date**: December 30, 2025, 8:32 AM EST  
 **Entity**: Contruil LLC (wholly owned)  
-**Jurisdiction**: [Your state]
+**Jurisdiction**: Virginia
 
 ---
 
-**Witness**: [Optional - could add if desired]  
-**Date**: [If witness added]
 
 This declaration is made under penalty of perjury under the laws of the United States of America.
 ---

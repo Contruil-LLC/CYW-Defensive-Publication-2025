@@ -1,0 +1,38 @@
+DEFENSIVE PUBLICATION MANIFEST
+==============================
+Generated: December 30, 2025, 06:42 AM EST
+ISO 8601:  2025-12-30T11:42:05Z
+
+FILES INCLUDED:
+---------------
+  [1] DEFENSIVE_PUBLICATION_COVER.md
+      Size: 4.20 KB (4309 bytes)
+      SHA-256: f25054450cbded4d42c58c37f0e1113c83c053f774091c4d8a09f45d15765cd0
+
+  [2] cyw_operating_manual.md
+      Size: 32.49 KB (33272 bytes)
+      SHA-256: 401166deb3f85c6876e9f55a046425097c477e4863150b9fc0fbd2b981fb4eba
+
+  [3] section_3_master_index_governance.md
+      Size: 11.91 KB (12199 bytes)
+      SHA-256: 24741c78087099594d89156563acb5d2b0dc7303f7fe289bfd6d5dc372e86c11
+
+  [4] section_4_project_status_and_appendices.md
+      Size: 12.57 KB (12877 bytes)
+      SHA-256: da7e1fad9c66b993b9f1163e9d03ad6df2ee73f5a5bac6fb1325f3d464510669
+
+  [5] nsls_outreach_cyw_deployment.md
+      Size: 9.93 KB (10177 bytes)
+      SHA-256: d86cc40b11fc2261fa92a60b6a00583cf6bd94ff657a40d139437759c072c65f
+
+  [6] master_index_governance.md
+      Size: 12.43 KB (12731 bytes)
+      SHA-256: dcaa17c842b461d6a23752c726b25c39d42716742e2d6e5ce7e8eb9eb04ef9aa
+
+  [7] project_status_report.md
+      Size: 6.71 KB (6878 bytes)
+      SHA-256: e3ce21feef6d849a9460ebd8a5c8ca4b8c1e21eb984dace03c9c5ebd287ecb9e
+
+---------------
+Total Files: 7
+Total Size: 90.27 KB

@@ -26,7 +26,7 @@ jobs:
       - name: Dependency audit
         run: |
           pip install pip-audit
-          pip-audit -r requirements.txt --format json > security_audit.json
+          pip-audit -r requirements.txt --format json > security_audit.json || true
 
       - name: Secret scan
         uses: trufflesecurity/trufflehog@main

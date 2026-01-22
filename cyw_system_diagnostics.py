@@ -80,7 +80,9 @@ class L3_StructuralValidator:
 
         if not missing:
             return GateResult("L3_structural", True, "payload structure complete")
-        return GateResult("L3_structural", False, f"missing fields: {', '.join(missing)}")
+        return GateResult(
+            "L3_structural", False, f"missing fields: {', '.join(missing)}"
+        )
 
 
 class L4_FactualValidator:

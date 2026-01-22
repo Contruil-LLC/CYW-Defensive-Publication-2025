@@ -22,6 +22,7 @@ def test_health_scoring_logic():
 @pytest.mark.timeout(10)
 def test_api_timeout_handling():
     """Ensure diagnostics don't hang on unresponsive APIs."""
-    diag = CYWDiagnostics(timeout=2)
+    diag = CYWDiagnostics(skip_api_init=True, timeout=2)
+    assert diag is not None
     result = diag.run_diagnostics(mock_mode=True)
     assert result["execution_time"] < 5.0

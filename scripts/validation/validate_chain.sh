@@ -3,19 +3,26 @@
 # Usage: ./validate_chain.sh
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PORTFOLIO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+PORTFOLIO_DIR="$(cd "$SCRIPT_DIR/../../portfolio" && pwd)"
 
 echo "🔍 Validating hash chains in portfolio..."
 echo ""
 
 ERRORS=0
-declare -A child_parents
+CHILD_PARENT_MAP="$(mktemp)"
 
 # Find all .md files with ValidationPacket headers
-find "$PORTFOLIO_DIR" -name "*.md" -type f | while read -r FILE; do
+while read -r FILE; do
   
-  # Extract parent_artifacts from front-matter
-  PARENTS=$(awk '/^parent_artifacts:/,/^child_artifacts:/' "$FILE" | grep -oP 'path: "\K[^"]+')
+  # Extract parent_artifacts from front-matter (portable awk)
+  PARENTS=$(awk '
+    /^parent_artifacts:/ {in_parents=1; next}
+    /^child_artifacts:/ {in_parents=0}
+    in_parents && /path: "/ {
+      split($0, parts, "\"")
+      if (parts[2] != "") print parts[2]
+    }
+  ' "$FILE")
   
   for PARENT_PATH in $PARENTS; do
     FULL_PARENT_PATH="$PORTFOLIO_DIR/$PARENT_PATH"
@@ -31,13 +38,25 @@ find "$PORTFOLIO_DIR" -name "*.md" -type f | while read -r FILE; do
     fi
     
     # Extract expected parent hash from child's front-matter
-    EXPECTED_HASH=$(awk "/path: \"$PARENT_PATH\"/,/hash:/" "$FILE" | grep -oP 'hash: "\K[^"]+' | head -1)
-    
+    EXPECTED_HASH=$(awk -v path="$PARENT_PATH" '
+      $0 ~ "path: \"" path "\"" {capture=1; next}
+      capture && /hash: "/ {
+        split($0, parts, "\"")
+        print parts[2]
+        exit
+      }
+    ' "$FILE")
+
     # Detect conflicting parent hashes for the same child
-    if [[ -n "${child_parents[$FILE]// }" && "${child_parents[$FILE]}" != "$EXPECTED_HASH" ]]; then
-      echo "❌ COLLISION: $FILE has conflicting parents"
+    collision_key="$FILE|$PARENT_PATH"
+    existing_hash=$(grep -F "$collision_key|" "$CHILD_PARENT_MAP" | awk -F'|' '{print $3}')
+    if [ -n "$existing_hash" ] && [ "$existing_hash" != "$EXPECTED_HASH" ]; then
+      echo "❌ COLLISION: $FILE parent $PARENT_PATH has conflicting hash"
+      ((ERRORS++))
     fi
-    child_parents[$FILE]="$EXPECTED_HASH"
+    if [ -z "$existing_hash" ]; then
+      echo "$collision_key|$EXPECTED_HASH" >> "$CHILD_PARENT_MAP"
+    fi
     
     # Compute actual parent hash
     ACTUAL_HASH=$("$SCRIPT_DIR/compute_hash.sh" "$FULL_PARENT_PATH")
@@ -55,7 +74,9 @@ find "$PORTFOLIO_DIR" -name "*.md" -type f | while read -r FILE; do
       echo "✓ Valid: $FILE → $PARENT_PATH"
     fi
   done
-done
+done < <(find "$PORTFOLIO_DIR" -name "*.md" -type f)
+
+rm -f "$CHILD_PARENT_MAP"
 
 echo ""
 if [ $ERRORS -eq 0 ]; then

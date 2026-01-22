@@ -4,23 +4,23 @@ artifact_id: "origin_story_2023"
 artifact_type: "origin_narrative"
 canonical_path: "docs/origin/Origin_Story_Amazon_Experiments_2023.md"
 creation_date: "2023-09-15T00:00:00Z"
-last_updated: "2025-01-22T23:59:59Z"
+last_updated: "2026-01-22T09:39:15Z"
 author: "Timothy Wheels"
-hash_sha256: "COMPUTED_ON_SAVE"
+hash_sha256: "61d619754a0eccd133fad8fa84f0e072abf1d82681a3139b1804e4143886f162"
 hash_algorithm: "SHA-256"
 
 parent_artifacts: []
 child_artifacts:
   - path: "docs/timeline/Development_Timeline_and_Milestones.md"
-    hash: "PENDING"
+    hash: "24236d28cc50ac8fd75b442cd2210e8a00c1adb4fec391e7f15a32b34561749c"
   - path: "architecture/claims/System_Claims_and_Architecture_Spec.md"
-    hash: "PENDING"
+    hash: "a20838acefc7e7498be708a78d29fc39beac697296df93ca1eeddbc7861f4fc8"
 
 validation_status: "canonical"
 provenance_chain_doc: "CYW_Virgil_Provenance_Chain_Integration.md"
 patent_reference: "US_Provisional_TBD"
 
-git_commit: "COMPUTED_ON_SAVE"
+git_commit: "4a21d58a8b64c540ae9d8389b23900d671079c31"
 attestation: "I attest this artifact accurately represents work completed on the stated dates."
 signature: "Timothy Wheels, 2025-01-22"
 ---

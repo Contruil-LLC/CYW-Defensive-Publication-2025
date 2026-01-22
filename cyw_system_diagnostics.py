@@ -165,10 +165,19 @@ def run_triangle_test(
 
 
 def build_attorney_packet(envelope: Envelope, report: Report) -> Dict[str, Any]:
+    # Avoid circular references by summarizing the report instead of embedding it.
+    report_summary = {
+        "timestamp": report.get("timestamp"),
+        "vlan": report.get("vlan"),
+        "gates_passed": sum(1 for gate in report.get("gates", []) if gate.get("passed")),
+        "gates_total": len(report.get("gates", [])),
+        "triangle_test_passed": report.get("triangle_test", {}).get("passed"),
+        "overall_health": report.get("system_health", {}).get("overall_score"),
+    }
     return {
         "generated_at": utc_now_iso(),
         "envelope": envelope,
-        "validation_report": report,
+        "validation_summary": report_summary,
     }
 
 

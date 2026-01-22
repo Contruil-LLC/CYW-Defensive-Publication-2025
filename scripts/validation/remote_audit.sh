@@ -1,40 +1,89 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/bash
 
-DOMAIN="https://timothywheels.com"
-MANIFEST="docs/manifest.yml"
-ENDPOINT="$DOMAIN/architecture.html"
+# Remote Audit Script - Static Site Version
+# Verifies deployed content matches local source via SHA-256 hashing
 
-echo "📡 Starting Remote Integrity Audit for $DOMAIN..."
+set -e
 
-# 1. Run the local chain first to ensure local state is perfect
-echo "🔄 Step 1: Running local Rebuild & Validate..."
-./scripts/validation/rebuild_chain.sh && ./scripts/validation/validate_chain.sh
+# Configuration
+SITE_URL="https://timothywheels.com"
+LOCAL_FILE="index.html"
+REMOTE_TEMP="/tmp/remote_index.html"
 
-if [ $? -ne 0 ]; then
-    echo "❌ Local validation failed. Aborting remote audit."
+echo "========================================="
+echo "REMOTE AUDIT: Sovereign Deployment Pipeline"
+echo "========================================="
+echo ""
+
+# Phase 1: Verify local file exists
+echo "Phase 1: Verifying local source..."
+if [ ! -f "$LOCAL_FILE" ]; then
+    echo "❌ ERROR: Local file not found: $LOCAL_FILE"
+    echo "   Run: Create index.html in repository root"
     exit 1
 fi
 
-# 2. Ping the live endpoint
-echo "🌐 Step 2: Pinging $ENDPOINT..."
-HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}" "$ENDPOINT")
+LOCAL_HASH=$(shasum -a 256 "$LOCAL_FILE" | awk '{print $1}')
+echo "✅ Local file found"
+echo "   SHA-256: $LOCAL_HASH"
+echo ""
 
-if [ "$HTTP_STATUS" -ne 200 ]; then
-    echo "❌ Remote endpoint unreachable (Status: $HTTP_STATUS). Check DNS/Vercel deployment."
+# Phase 2: Fetch remote content
+echo "Phase 2: Fetching remote deployment..."
+if ! curl -sf --max-time 30 --max-redirs 5 "$SITE_URL/" -o "$REMOTE_TEMP"; then
+    echo "❌ ERROR: Failed to fetch remote site"
+    echo "   URL: $SITE_URL/"
+    echo ""
+    echo "Possible causes:"
+    echo "  1. DNS not propagated (wait 5-10 minutes)"
+    echo "  2. Vercel deployment not complete (check dashboard)"
+    echo "  3. Network connectivity issue (check internet)"
+    echo ""
+    echo "Diagnostic commands:"
+    echo "  dig timothywheels.com +short"
+    echo "  curl -I $SITE_URL/"
     exit 1
 fi
 
-# 3. Verify specific hash from manifest against live content
-# (Assuming your manifest lists the Origin Story hash as the primary anchor)
-LOCAL_HASH=$(grep "Origin_Story" "$MANIFEST" -A 5 | grep "hash:" | awk '{print $2}' | tr -d '"')
-echo "🔍 Step 3: Comparing Local Hash ($LOCAL_HASH) with Live Site..."
+REMOTE_HASH=$(shasum -a 256 "$REMOTE_TEMP" | awk '{print $1}')
+echo "✅ Remote content fetched"
+echo "   SHA-256: $REMOTE_HASH"
+echo ""
 
-# Download the live page and check if the hash string exists in the HTML
-if curl -s "$ENDPOINT" | grep -q "$LOCAL_HASH"; then
-    echo "✅ MATCH: Live site integrity verified against local manifest."
-    echo "⚖️  PROVENANCE INTACT."
+# Phase 3: Compare hashes
+echo "Phase 3: Cryptographic verification..."
+if [ "$LOCAL_HASH" == "$REMOTE_HASH" ]; then
+    echo "✅ DEPLOYMENT INTEGRITY VERIFIED"
+    echo ""
+    echo "========================================="
+    echo "🌐 Live Site: $SITE_URL/"
+    echo "🔒 Cryptographic Match: Confirmed"
+    echo "📊 Verification Method: SHA-256"
+    echo "========================================="
+    echo ""
+    rm "$REMOTE_TEMP"
+    exit 0
 else
-    echo "⚠️  MISMATCH: Live site hash does not match local manifest. PUSH REQUIRED."
+    echo "❌ INTEGRITY BREACH DETECTED"
+    echo ""
+    echo "========================================="
+    echo "Hash Mismatch Details:"
+    echo "----------------------------------------"
+    echo "Local:  $LOCAL_HASH"
+    echo "Remote: $REMOTE_HASH"
+    echo "========================================="
+    echo ""
+    echo "This indicates deployed content differs from source."
+    echo ""
+    echo "Diagnostic steps:"
+    echo "  1. Check if you committed latest changes: git status"
+    echo "  2. Verify Vercel deployed from correct commit: Check dashboard"
+    echo "  3. Check CDN propagation: Wait 60 seconds and retry"
+    echo "  4. Force redeploy: make deploy"
+    echo ""
+    echo "Detailed comparison:"
+    diff "$LOCAL_FILE" "$REMOTE_TEMP" || true
+    echo ""
+    rm "$REMOTE_TEMP"
     exit 1
 fi

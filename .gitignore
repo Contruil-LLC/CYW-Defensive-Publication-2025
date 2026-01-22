@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets (critical for patent work)
+.env
+*.key
+*.pem
+credentials.json
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local diagnostics output
+diagnostics_report_*.json
+!.github/workflows/  # Ensure workflows are tracked

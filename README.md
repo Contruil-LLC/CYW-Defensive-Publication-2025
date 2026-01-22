@@ -57,3 +57,18 @@ This declaration establishes:
 
 This declaration is made under penalty of perjury under the laws of the United States of America.
 ---
+
+## Sovereign Certificate
+
+This repository includes a cryptographic deployment verification system that ensures the local provenance chain matches the live deployment.
+
+**Core guarantees:**
+- Hash chain rebuild and validation run before every deployment.
+- Git commits provide timestamped, tamper-evident records.
+- Remote audit compares local hashes to live site content.
+
+**Primary commands:**
+- `make deploy` — rebuild → validate → commit → push → remote audit
+- `make audit` — verify remote integrity without redeploying
+
+**Implementation:** See `Makefile` and `scripts/validation/remote_audit.sh`.

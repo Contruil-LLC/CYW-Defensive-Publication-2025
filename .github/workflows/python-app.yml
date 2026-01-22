@@ -35,7 +35,7 @@ jobs:
           base: ${{ github.event.repository.default_branch }}
 
       - name: Upload security artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: security-scan
           path: security_audit.json
@@ -167,7 +167,7 @@ jobs:
             > diagnostics_report_${{ github.sha }}.json.sha256
 
       - name: Upload diagnostics artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: diagnostics-report-${{ github.sha }}
           path: |

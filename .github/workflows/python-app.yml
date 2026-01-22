@@ -90,6 +90,7 @@ jobs:
       - name: Run unit tests
         timeout-minutes: 5
         run: |
+          export PYTHONPATH="${PYTHONPATH}:${PWD}"
           pytest tests/ \
             --cov=cyw_system_diagnostics \
             --cov-report=xml \

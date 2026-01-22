@@ -72,3 +72,4 @@ This repository includes a cryptographic deployment verification system that ens
 - `make audit` — verify remote integrity without redeploying
 
 **Implementation:** See `Makefile` and `scripts/validation/remote_audit.sh`.
+

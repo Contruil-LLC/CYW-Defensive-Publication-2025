@@ -13,11 +13,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
-import time
-from typing import Any, Dict, List, Tuple
-
+from typing import Any, Dict, List, Protocol, Tuple, cast
 
 Envelope = Dict[str, Any]
 Report = Dict[str, Any]
@@ -93,6 +92,10 @@ class L4_FactualValidator:
         if facts_verified is True:
             return GateResult("L4_factual", True, "facts verified")
         return GateResult("L4_factual", False, "facts not verified")
+
+
+class EnvelopeValidator(Protocol):
+    def validate(self, envelope: "Envelope") -> "GateResult": ...
 
 
 @dataclass
@@ -198,7 +201,7 @@ class CYWDiagnostics:
         envelope.setdefault("metadata", {})["vlan"] = vlan
         envelope.setdefault("logs", []).append(f"routed_to:{vlan}")
 
-        validators = [
+        validators: List[EnvelopeValidator] = [
             L1_EnvelopeValidator(),
             L2_AccessControlValidator(),
             L3_StructuralValidator(),
@@ -313,7 +316,7 @@ def parse_args() -> argparse.Namespace:
 
 def load_envelope(path: str) -> Envelope:
     with open(path, "r", encoding="utf-8") as handle:
-        return json.load(handle)
+        return cast(Envelope, json.load(handle))
 
 
 def main() -> int:

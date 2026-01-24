@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RME Packet – Ready Links | Timothy Wheels</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            border-bottom: 2px solid #00bcd4;
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            color: #00bcd4;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #999;
+            font-size: 1.2rem;
+        }
+
+        h2 {
+            color: #00bcd4;
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #333;
+        }
+
+        h3 {
+            color: #4dd0e1;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        .purpose {
+            background: #1a1a1a;
+            border-left: 4px solid #00bcd4;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .document-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .document-card:hover {
+            border-color: #00bcd4;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 188, 212, 0.2);
+        }
+
+        .document-card h3 {
+            margin-top: 0;
+            color: #00bcd4;
+        }
+
+        .document-card a {
+            color: #00bcd4;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .document-card a:hover {
+            text-decoration: underline;
+        }
+
+        .proof-point {
+            background: #0d1117;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 3px solid #4dd0e1;
+            border-radius: 4px;
+        }
+
+        .proof-point strong {
+            color: #4dd0e1;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-script {
+            background: #1a1a1a;
+            border: 2px solid #4caf50;
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 8px;
+        }
+
+        .demo-script h2 {
+            color: #4caf50;
+            border-bottom: 1px solid #4caf50;
+        }
+
+        .demo-section {
+            margin: 1.5rem 0;
+        }
+
+        .demo-section h3 {
+            color: #4caf50;
+            font-size: 1.2rem;
+        }
+
+        .demo-timestamp {
+            color: #999;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .demo-quote {
+            background: #0d1117;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            font-style: italic;
+        }
+
+        .cta {
+            background: linear-gradient(135deg, #00bcd4, #0097a7);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .cta h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .cta p {
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+            color: #ccc;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        code {
+            background: #1a1a1a;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #4caf50;
+            border: 1px solid #333;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #333;
+            margin: 2rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid #333;
+            text-align: center;
+            color: #666;
+        }
+
+        footer a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .document-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RME Packet – Ready Links</h1>
+            <p class="subtitle">Consolidated RME Mobility Application Framework</p>
+        </header>
+
+        <div class="purpose">
+            <strong>Purpose:</strong> Consolidated reference for RME Process Assistant / RME Tech mobility applications. Four documents that prove systems thinking, troubleshooting rigor, and safety-first ownership.
+        </div>
+
+        <section>
+            <h2>Portfolio Documentation</h2>
+
+            <div class="document-card">
+                <h3>1. Portfolio Root</h3>
+                <p><a href="/">timothywheels.com →</a></p>
+                
+                <div class="proof-point">
+                    <strong>What it proves:</strong>
+                    You architect systems end-to-end—documentation isn't an afterthought, it's infrastructure. Cryptographic verification, deployment automation, and defensive publication demonstrate engineering rigor at enterprise scale.
+                </div>
+
+                <div class="proof-point">
+                    <strong>Why it matters:</strong>
+                    Shows you think like an engineer who owns outcomes, not just tasks. RME roles require this same systems-first mindset.
+                </div>
+            </div>
+
+            <div class="document-card">
+                <h3>2. Failure Mode Runbook</h3>
+                <p><a href="failure-mode-runbook.html">View Runbook →</a></p>
+                
+                <div class="proof-point">
+                    <strong>What it proves:</strong>
+                    You troubleshoot backward from impact—mapping symptoms to root cause like triaging network outages. Decision trees, emergency recovery protocols, and 5-Why frameworks mirror RME diagnostic procedures.
+                </div>
+
+                <div class="proof-point">
+                    <strong>Why it matters:</strong>
+                    RME lives in failure scenarios. This shows you've already indexed the terrain and can triage under pressure.
+                </div>
+            </div>
+
+            <div class="document-card">
+                <h3>3. RME Translation Guide</h3>
+                <p><a href="rme-translation.html">View Translation →</a></p>
+                
+                <div class="proof-point">
+                    <strong>What it proves:</strong>
+                    You bridge domains—translating CYW orchestration logic into conveyor reliability without losing precision. Leadership talking points demonstrate ability to communicate technical concepts to non-technical stakeholders.
+                </div>
+
+                <div class="proof-point">
+                    <strong>Why it matters:</strong>
+                    Demonstrates you learn fast and contextualize prior expertise instead of starting from zero. Process Assistants translate between operations and maintenance daily.
+                </div>
+            </div>
+
+            <div class="document-card">
+                <h3>4. Threat Model Analysis</h3>
+                <p><a href="threat-model.html">View Analysis →</a></p>
+                
+                <div class="proof-point">
+                    <strong>What it proves:</strong>
+                    You assess risk systematically—LOTO, lockout procedures, and hazard mitigation aren't compliance theater, they're designed-in. Red team testing and incident response frameworks show proactive ownership of safety protocols.
+                </div>
+
+                <div class="proof-point">
+                    <strong>Why it matters:</strong>
+                    Shows ownership of the safety layer, not just the technical layer. RME roles require defensive thinking about equipment failure modes and personnel safety.
+                </div>
+            </div>
+        </section>
+
+        <div class="demo-script">
+            <h2>3-Minute Demo Script</h2>
+
+            <div class="demo-section">
+                <h3><span class="demo-timestamp">[0:00–0:30]</span> The Hook</h3>
+                <div class="demo-quote">
+                    "I'm Fly. Waterspider. CIS student. Veteran. I built an AI orchestration framework that treats creative workflows like network infrastructure—and now I'm translating that same systems thinking into RME."
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h3><span class="demo-timestamp">[0:30–1:30]</span> The Proof</h3>
+                <div class="demo-quote">
+                    "Here's what that looks like in practice:
+                    <ul>
+                        <li><strong>Failure Mode Runbook</strong> – I mapped common conveyor/sorter failures to diagnostic trees, the same way I'd troubleshoot VLAN misconfigurations</li>
+                        <li><strong>RME Translation</strong> – I took my CYW framework and rebuilt it as reliability protocols: routing, redundancy, fault isolation</li>
+                        <li><strong>Threat Model</strong> – I designed a safety-first risk matrix because ownership means engineering out hazards, not reacting to incidents</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h3><span class="demo-timestamp">[1:30–2:30]</span> The Bridge</h3>
+                <div class="demo-quote">
+                    "Why does a Waterspider with an AI framework care about RME?<br><br>
+                    Because I see the same patterns:
+                    <ul>
+                        <li>Conveyors are data pipes. Jams are packet loss.</li>
+                        <li>Preventive maintenance is health checks.</li>
+                        <li>Downtime costs are measured in throughput, same as latency in distributed systems.</li>
+                    </ul>
+                    I don't just want to <em>fix</em> equipment. I want to <em>own</em> uptime the way I own my workflows—designed, documented, defensible."
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h3><span class="demo-timestamp">[2:30–3:00]</span> The Close</h3>
+                <div class="demo-quote">
+                    "This packet is my technical interview. Four links. Four proof points.<br><br>
+                    I'm not asking you to bet on potential—I'm showing you the infrastructure is already built.<br><br>
+                    Let's talk about what reliability engineering looks like when it's treated as a product, not a reaction."
+                </div>
+            </div>
+        </div>
+
+        <div class="cta">
+            <h3>That's when it clicked:</h3>
+            <p>RME isn't about motors and sensors—it's about designing systems that <strong>stay online</strong>.</p>
+            <p style="margin-top: 1rem; font-size: 1.2rem; font-weight: 600;">This is how you Control Your World.</p>
+        </div>
+
+        <footer>
+            <p>Part of the RME Engineering portfolio | <a href="/">Timothy Wheels</a></p>
+            <p>© 2025 Timothy Wheels / Contruil LLC. All Rights Reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

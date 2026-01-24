@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Failure Mode Runbook | Timothy Wheels</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            border-bottom: 2px solid #00bcd4;
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            color: #00bcd4;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #999;
+            font-size: 1.2rem;
+        }
+
+        .breadcrumb {
+            background: #1a1a1a;
+            border-left: 4px solid #00bcd4;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+        }
+
+        .breadcrumb a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            color: #00bcd4;
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #333;
+        }
+
+        h3 {
+            color: #4dd0e1;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        h4 {
+            color: #80deea;
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #00bcd4;
+            color: #0a0a0a;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #222;
+        }
+
+        .failure-mode {
+            background: #1a1a1a;
+            border-left: 4px solid #f44336;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .failure-mode h3 {
+            color: #f44336;
+            margin-top: 0;
+        }
+
+        .emergency {
+            background: #1a1a1a;
+            border: 2px solid #ff9800;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .emergency h2 {
+            color: #ff9800;
+            border-bottom: none;
+            margin-top: 0;
+        }
+
+        .emergency::before {
+            content: "⚠️ ";
+            font-size: 1.5rem;
+        }
+
+        .checklist {
+            background: #1a1a1a;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            color: #00bcd4;
+            font-size: 1.2rem;
+        }
+
+        code {
+            background: #1a1a1a;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #4caf50;
+            border: 1px solid #333;
+        }
+
+        pre {
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid #333;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            border: none;
+            color: #4caf50;
+        }
+
+        .decision-tree {
+            background: #1a1a1a;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #333;
+            color: #80deea;
+        }
+
+        .rme-analogy {
+            background: #1a1a1a;
+            border-left: 4px solid #4caf50;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .rme-analogy h2 {
+            color: #4caf50;
+            border-bottom: none;
+            margin-top: 0;
+        }
+
+        .rme-analogy::before {
+            content: "🏭 ";
+            font-size: 1.5rem;
+        }
+
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+            color: #ccc;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        strong {
+            color: #00bcd4;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #333;
+            margin: 2rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid #333;
+            text-align: center;
+            color: #666;
+        }
+
+        footer a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .video-placeholder {
+            background: #1a1a1a;
+            border: 2px dashed #333;
+            padding: 3rem;
+            text-align: center;
+            margin: 2rem 0;
+            border-radius: 8px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Failure Mode Runbook</h1>
+            <p class="subtitle">Diagnostic Procedures & Root Cause Analysis</p>
+        </header>
+
+        <div class="breadcrumb">
+            📋 <strong>Part of the <a href="rme-packet.html">RME Packet – Ready Links</a></strong><br>
+            Comprehensive diagnostic procedures with decision trees and emergency recovery protocols. <a href="/rme/">View full packet →</a>
+        </div>
+
+        <div class="video-placeholder">
+            📹 Video walkthrough coming soon
+        </div>
+
+        <section>
+            <h2>Purpose</h2>
+            <p>Systematic troubleshooting framework for deployment integrity failures, applying RME diagnostic methodology to software infrastructure.</p>
+        </section>
+
+        <section>
+            <h2>Common Failure Patterns (Indexed)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pattern ID</th>
+                        <th>Pattern</th>
+                        <th>Primary Signal</th>
+                        <th>Typical Root Cause</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>FM-001</td>
+                        <td>Hash Mismatch</td>
+                        <td><code>make audit</code> fails</td>
+                        <td>Uncommitted changes / CDN lag</td>
+                    </tr>
+                    <tr>
+                        <td>FM-002</td>
+                        <td>Root 404</td>
+                        <td>Homepage returns 404</td>
+                        <td>Routing misconfiguration</td>
+                    </tr>
+                    <tr>
+                        <td>FM-003</td>
+                        <td>Remote Fetch Failure</td>
+                        <td>curl fails on deployment URL</td>
+                        <td>DNS propagation / CDN issue</td>
+                    </tr>
+                    <tr>
+                        <td>FM-004</td>
+                        <td>401 Protection Active</td>
+                        <td>Unauthorized access errors</td>
+                        <td>Vercel password protection enabled</td>
+                    </tr>
+                    <tr>
+                        <td>FM-005</td>
+                        <td>Git Rejection</td>
+                        <td>Push fails with error</td>
+                        <td>Diverged branches / auth failure</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <div class="emergency">
+            <h2>Immediate Containment (Halt + Rollback)</h2>
+            <p><strong>When to halt:</strong> Any integrity breach (hash mismatch), unknown deployment state, or 4xx/5xx at root.</p>
+            
+            <div class="checklist">
+                <h4>Emergency Response Procedure:</h4>
+                <ul>
+                    <li>Stop all deployments immediately</li>
+                    <li>Document current state (<code>git status -sb</code>, <code>make audit</code> output)</li>
+                    <li>Identify last known good commit: <code>git log --oneline -5</code></li>
+                    <li>Execute rollback: <code>git reset --hard [LAST_GOOD_COMMIT]</code></li>
+                    <li>Verify integrity: <code>make audit</code> must pass before proceeding</li>
+                    <li>Escalate if rollback fails (see Escalation Triggers section)</li>
+                </ul>
+            </div>
+        </div>
+
+        <section>
+            <h2>Escalation Triggers (Involve Senior Engineers)</h2>
+            <p>Escalate immediately if any of the following occur:</p>
+            <ul>
+                <li><strong>Repeated integrity failures</strong> after two redeploy attempts</li>
+                <li><strong>Unknown deployment state</strong> (git history unclear, multiple diverged branches)</li>
+                <li><strong>CDN propagation delays</strong> exceeding 15 minutes</li>
+                <li><strong>DNS resolution failures</strong> affecting production domain</li>
+                <li><strong>Cryptographic verification anomalies</strong> (hash collisions, signature failures)</li>
+            </ul>
+
+            <div class="checklist">
+                <h4>Escalation Handoff Checklist:</h4>
+                <ul>
+                    <li>Current git commit SHA and status</li>
+                    <li>Full <code>make audit</code> output</li>
+                    <li>Vercel deployment logs (last 3 deployments)</li>
+                    <li>Timeline of failure onset and containment actions taken</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="failure-mode">
+            <h3>FM-001: Hash Mismatch</h3>
+            
+            <h4>Symptom</h4>
+            <p><code>make audit</code> reports local hash differs from remote hash.</p>
+
+            <h4>Observable Indicators</h4>
+            <ul>
+                <li><code>make audit</code> output shows local/remote hashes differ</li>
+                <li>Vercel deployment shows latest commit but CDN still serves old content</li>
+                <li>User report: "Site looks outdated" or "content doesn't match repo"</li>
+            </ul>
+
+            <h4>Decision Tree</h4>
+            <div class="decision-tree">
+Hash mismatch?
+├─ Local hash matches HEAD?
+│  ├─ yes → CDN propagation delay (wait 5min, retry audit)
+│  └─ no → Uncommitted changes detected
+│     ├─ Expected changes? → commit and deploy
+│     └─ Unexpected changes? → investigate (<code>git diff</code>)
+└─ Remote fetch fails?
+   ├─ DNS issue → verify domain resolution
+   └─ CDN cache → force invalidate or wait
+            </div>
+
+            <h4>Root Cause Isolation</h4>
+            <ol>
+                <li>Check local state: <code>git status -sb</code></li>
+                <li>Verify HEAD commit: <code>git log --oneline -1</code></li>
+                <li>Test remote fetch: <code>curl -I https://timothywheels.com</code></li>
+                <li>Compare hashes manually: <code>sha256sum index.html</code> vs remote</li>
+            </ol>
+
+            <h4>Resolution</h4>
+            <ul>
+                <li><strong>If uncommitted changes:</strong> Review, commit, redeploy</li>
+                <li><strong>If CDN lag:</strong> Wait 5-10 minutes, retry audit</li>
+                <li><strong>If persistent mismatch:</strong> Force redeploy with cache invalidation</li>
+            </ul>
+        </section>
+
+        <section class="failure-mode">
+            <h3>FM-002: Root 404</h3>
+            
+            <h4>Symptom</h4>
+            <p>Homepage (<code>/</code>) returns 404 Not Found.</p>
+
+            <h4>Observable Indicators</h4>
+            <ul>
+                <li>Browser shows 404 error at root URL</li>
+                <li><code>curl https://timothywheels.com</code> returns 404</li>
+                <li>Subpages may load correctly (e.g., <code>/rme/</code> works)</li>
+            </ul>
+
+            <h4>Root Cause Isolation</h4>
+            <ol>
+                <li>Verify <code>index.html</code> exists in repo root</li>
+                <li>Check Vercel project settings (root directory configuration)</li>
+                <li>Review <code>vercel.json</code> routing rules</li>
+                <li>Check deployment logs for file upload errors</li>
+            </ol>
+
+            <h4>Resolution</h4>
+            <ul>
+                <li>Ensure <code>index.html</code> is in repository root (not subdirectory)</li>
+                <li>Verify Vercel project linked to correct repository/branch</li>
+                <li>Check <code>vercel.json</code> doesn't override root routing</li>
+                <li>Redeploy after fixing configuration</li>
+            </ul>
+        </section>
+
+        <section class="failure-mode">
+            <h3>FM-003: Remote Fetch Failure</h3>
+            
+            <h4>Symptom</h4>
+            <p><code>curl</code> request to deployment URL fails or times out.</p>
+
+            <h4>Observable Indicators</h4>
+            <ul>
+                <li><code>curl</code> returns connection timeout or DNS resolution failure</li>
+                <li>Browser shows "Cannot reach this page"</li>
+                <li>Vercel dashboard shows deployment as "Ready" but site unreachable</li>
+            </ul>
+
+            <h4>Decision Tree</h4>
+            <div class="decision-tree">
+Remote fetch fails?
+├─ DNS resolves?
+│  ├─ no → DNS propagation issue (check registrar)
+│  └─ yes → CDN/routing issue
+│     ├─ Vercel shows "Ready"? → CDN cache problem
+│     └─ Deployment failed? → check build logs
+└─ Timeout vs immediate fail?
+   ├─ Timeout → Network/firewall issue
+   └─ Immediate → SSL/cert problem
+            </div>
+
+            <h4>Root Cause Isolation</h4>
+            <ol>
+                <li>Test DNS: <code>nslookup timothywheels.com</code></li>
+                <li>Test direct IP: <code>curl -I [VERCEL_IP]</code></li>
+                <li>Check Vercel deployment status in dashboard</li>
+                <li>Review deployment logs for errors</li>
+            </ol>
+
+            <h4>Resolution</h4>
+            <ul>
+                <li><strong>DNS issue:</strong> Wait for propagation (up to 48hrs) or check domain settings</li>
+                <li><strong>CDN cache:</strong> Invalidate cache via Vercel dashboard</li>
+                <li><strong>Deployment failure:</strong> Fix build errors, redeploy</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Recovery Verification (Post-Fix Validation)</h2>
+            <p>Use this checklist after any fix or rollback:</p>
+            
+            <div class="checklist">
+                <ol>
+                    <li><code>git status -sb</code> shows clean working tree</li>
+                    <li><code>make audit</code> passes with matching hashes</li>
+                    <li><code>curl -I https://timothywheels.com</code> returns 200 OK</li>
+                    <li>Visual inspection: homepage loads correctly in browser</li>
+                    <li>Verification: key documents (RME packet, runbooks) accessible</li>
+                </ol>
+            </div>
+
+            <p><strong>Gate:</strong> If any step fails, return to decision tree. Do not proceed with new deployments until all checks pass.</p>
+        </section>
+
+        <section>
+            <h2>5-Why Examples (Root Cause Discipline)</h2>
+
+            <h3>Example A: Root 404 on Production</h3>
+            <ol>
+                <li><strong>Why</strong> is the root returning 404?<br>Because <code>index.html</code> isn't being served.</li>
+                <li><strong>Why</strong> isn't it being served?<br>Because Vercel routing rules aren't configured correctly.</li>
+                <li><strong>Why</strong> aren't the rules configured?<br>Because <code>vercel.json</code> was edited without testing.</li>
+                <li><strong>Why</strong> was it edited without testing?<br>Because there's no staging environment validation step.</li>
+                <li><strong>Why</strong> is there no staging validation?<br>Because deployment workflow doesn't include pre-production checks.</li>
+            </ol>
+
+            <p><strong>Corrective Action:</strong> Add staging environment with mandatory validation before production deploy. Update <code>Makefile</code> to include <code>make test-staging</code> step.</p>
+
+            <h3>Example B: Audit Hash Mismatch</h3>
+            <ol>
+                <li><strong>Why</strong> do hashes not match?<br>Because local file differs from remote.</li>
+                <li><strong>Why</strong> does local differ?<br>Because changes were made but not committed.</li>
+                <li><strong>Why</strong> weren't they committed?<br>Because developer made quick fix without following commit protocol.</li>
+                <li><strong>Why</strong> did they bypass protocol?<br>Because there's no automated pre-commit integrity check.</li>
+                <li><strong>Why</strong> is there no pre-commit check?<br>Because git hooks weren't configured in repository.</li>
+            </ol>
+
+            <p><strong>Corrective Action:</strong> Install git pre-commit hook that runs <code>make audit</code> before allowing commits. Prevents uncommitted changes from reaching deployment pipeline.</p>
+        </section>
+
+        <div class="rme-analogy">
+            <h2>RME Analogy: Vercel Routing = Conveyor Jam Logic</h2>
+            <ul>
+                <li><strong>Routing rules</strong> are the conveyor pathing map</li>
+                <li><strong>404 at root</strong> is a jam at the first divert—items never reach the correct lane</li>
+                <li><strong>Mislinked project</strong> is the wrong line assignment—work is flowing, but to the wrong destination</li>
+            </ul>
+        </div>
+
+        <div class="rme-analogy">
+            <h2>RME Analogy: 404/401 = QC Rejection / Access Control Failure</h2>
+            <ul>
+                <li><strong>404 Not Found</strong> is a QC reject: the item fails inspection because the expected part isn't on the line</li>
+                <li><strong>401 Unauthorized</strong> is access control: the part exists, but the gate won't open without credentials</li>
+                <li><strong>Fix</strong> is either supplying the correct part (route/file) or providing authorization (disable protection or bypass)</li>
+            </ul>
+        </div>
+
+        <div class="rme-analogy">
+            <h2>RME Analogy: Hash Verification = PM Inspection Checkpoints</h2>
+            <ul>
+                <li><strong>SHA-256 hash</strong> is the PM spec: the required measurement for integrity</li>
+                <li><strong><code>make audit</code></strong> is the inspection gate: it compares live output to spec before release</li>
+                <li><strong>Mismatch</strong> is a failed PM check: stop the line, isolate cause, then resume</li>
+            </ul>
+        </div>
+
+        <div class="rme-analogy">
+            <h2>RME Analogy: Deployment Pipeline = Production Line Flow</h2>
+            <ul>
+                <li><strong>Source update</strong> is the work order</li>
+                <li><strong>Build/commit</strong> is assembly completion</li>
+                <li><strong>Deploy</strong> is line release to shipping</li>
+                <li><strong>Audit</strong> is outbound QC before customer delivery</li>
+            </ul>
+        </div>
+
+        <section>
+            <h2>Preventive Maintenance</h2>
+            <ul>
+                <li><strong>Daily:</strong> <code>make audit</code> after any deploy</li>
+                <li><strong>Weekly:</strong> Review <code>SOVEREIGN_LOG.md</code>, Vercel logs, and DNS resolution</li>
+                <li><strong>Monthly:</strong> Verify SSL certificates, review access logs for anomalies</li>
+                <li><strong>Quarterly:</strong> Full security audit, dependency updates, backup restoration test</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>Part of the RME Engineering portfolio | <a href="/">Timothy Wheels</a></p>
+            <p>© 2025 Timothy Wheels / Contruil LLC. All Rights Reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

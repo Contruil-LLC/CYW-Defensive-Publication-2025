@@ -17,7 +17,7 @@ Shows you think like an engineer who owns outcomes, not just tasks. RME roles re
 ---
 
 ## 2. Failure Mode Runbook
-**Link:** [timothywheels.com/docs/FAILURE_MODE_RUNBOOK.md](https://timothywheels.com/docs/FAILURE_MODE_RUNBOOK.md)
+**Link:** [timothywheels.com/docs/failure-mode-runbook.html](https://timothywheels.com/docs/failure-mode-runbook.html)
 
 **What it proves:**
 - You troubleshoot backward from impact—mapping symptoms to root cause like triaging network outages
@@ -29,7 +29,7 @@ RME lives in failure scenarios. This shows you've already indexed the terrain an
 ---
 
 ## 3. RME Translation Guide
-**Link:** [timothywheels.com/docs/RME_TRANSLATION.md](https://timothywheels.com/docs/RME_TRANSLATION.md)
+**Link:** [timothywheels.com/docs/rme-translation.html](https://timothywheels.com/docs/rme-translation.html)
 
 **What it proves:**
 - You bridge domains—translating CYW orchestration logic into conveyor reliability without losing precision
@@ -41,7 +41,7 @@ Demonstrates you learn fast and contextualize prior expertise instead of startin
 ---
 
 ## 4. Threat Model Analysis
-**Link:** [timothywheels.com/docs/THREAT_MODEL.md](https://timothywheels.com/docs/THREAT_MODEL.md)
+**Link:** [timothywheels.com/docs/threat-model.html](https://timothywheels.com/docs/threat-model.html)
 
 **What it proves:**
 - You assess risk systematically—LOTO, lockout procedures, and hazard mitigation aren't compliance theater, they're designed-in

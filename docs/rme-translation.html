@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RME Translation Guide | Timothy Wheels</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            border-bottom: 2px solid #00bcd4;
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            color: #00bcd4;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #999;
+            font-size: 1.2rem;
+        }
+
+        .breadcrumb {
+            background: #1a1a1a;
+            border-left: 4px solid #00bcd4;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+        }
+
+        .breadcrumb a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            color: #00bcd4;
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #333;
+        }
+
+        h3 {
+            color: #4dd0e1;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #00bcd4;
+            color: #0a0a0a;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #222;
+        }
+
+        .principle-card {
+            background: #1a1a1a;
+            border-left: 4px solid #00bcd4;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .principle-card strong {
+            color: #00bcd4;
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .star-section {
+            background: #1a1a1a;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .star-section strong {
+            color: #00bcd4;
+        }
+
+        .talking-point {
+            background: #1a1a1a;
+            border-left: 4px solid #4caf50;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        .talking-point::before {
+            content: "💬 ";
+            font-style: normal;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #333;
+            margin: 2rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid #333;
+            text-align: center;
+            color: #666;
+        }
+
+        footer a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .video-placeholder {
+            background: #1a1a1a;
+            border: 2px dashed #333;
+            padding: 3rem;
+            text-align: center;
+            margin: 2rem 0;
+            border-radius: 8px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RME Translation Guide</h1>
+            <p class="subtitle">Deployment Pipeline to Manufacturing Operations</p>
+        </header>
+
+        <div class="breadcrumb">
+            📋 <strong>Part of the <a href="rme-packet.html">RME Packet – Ready Links</a></strong><br>
+            This translation guide is one component of a complete RME mobility application framework. <a href="/rme/">View full packet →</a>
+        </div>
+
+        <div class="video-placeholder">
+            📹 Video narration coming soon
+        </div>
+
+        <section>
+            <h2>Purpose</h2>
+            <p>Translate the Sovereign Deployment Pipeline into RME/manufacturing language for Amazon ORF3 Process Assistant and RME Tech roles.</p>
+        </section>
+
+        <section>
+            <h2>Concept Translation Matrix</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Deployment Concept</th>
+                        <th>RME Equivalent</th>
+                        <th>ORF3 Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hash verification</td>
+                        <td>Torque spec validation</td>
+                        <td>Conveyor belt tension check</td>
+                    </tr>
+                    <tr>
+                        <td>Makefile phases</td>
+                        <td>PLC sequence logic</td>
+                        <td>Pick → transport → place sequence</td>
+                    </tr>
+                    <tr>
+                        <td>Audit halt</td>
+                        <td>Safety interlock</td>
+                        <td>Light curtain E-stop</td>
+                    </tr>
+                    <tr>
+                        <td>Git provenance</td>
+                        <td>Maintenance log</td>
+                        <td>CMMS technician record</td>
+                    </tr>
+                    <tr>
+                        <td>CDN propagation</td>
+                        <td>Staging buffer</td>
+                        <td>Package travel time</td>
+                    </tr>
+                    <tr>
+                        <td>Rollback</td>
+                        <td>Line stop / revert</td>
+                        <td>Restore last known good config</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Leadership Principle Bridges</h2>
+            
+            <div class="principle-card">
+                <strong>Ownership</strong>
+                I built verification into deployment so integrity is system-enforced, not assumed.
+            </div>
+
+            <div class="principle-card">
+                <strong>Dive Deep</strong>
+                When audits fail, I isolate layers (local hash → git → CDN → DNS) before changing anything.
+            </div>
+
+            <div class="principle-card">
+                <strong>Insist on Highest Standards</strong>
+                "Site loads" is not success; cryptographic integrity is.
+            </div>
+
+            <div class="principle-card">
+                <strong>Invent and Simplify</strong>
+                Six-step manual deploy → single <code>make deploy</code>.
+            </div>
+        </section>
+
+        <section>
+            <h2>Interview-Ready STAR Example</h2>
+            
+            <div class="star-section">
+                <p><strong>Situation:</strong> Portfolio deployments were manual and error-prone.</p>
+                <p><strong>Task:</strong> Guarantee integrity end-to-end.</p>
+                <p><strong>Action:</strong> Built a hash chain + audit pipeline and automated it.</p>
+                <p><strong>Result:</strong> Zero integrity drift and reproducible deployments.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Talking Point</h2>
+            
+            <div class="talking-point">
+                "My audit script is the software equivalent of a calibration certificate—objective proof that output matches spec."
+            </div>
+        </section>
+
+        <footer>
+            <p>Part of the RME Engineering portfolio | <a href="/">Timothy Wheels</a></p>
+            <p>© 2025 Timothy Wheels / Contruil LLC. All Rights Reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

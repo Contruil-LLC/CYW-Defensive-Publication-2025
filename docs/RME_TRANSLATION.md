@@ -1,5 +1,5 @@
-> **📋 Part of the [RME Packet – Ready Links](rme-packet.html)**  
-> This translation guide is one component of a complete RME mobility application framework. [View full packet →](/rme/)
+> **📋 Part of the [RME Packet – Ready Links](rme-packet)**  
+> This translation guide is one component of a complete RME mobility application framework. [View full packet →](/docs/rme-packet)
 
 ---
 

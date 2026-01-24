@@ -1,3 +1,8 @@
+> **📋 Part of the [RME Packet – Ready Links](RME_PACKET_READY_LINKS.md)**  
+> This translation guide is one component of a complete RME mobility application framework. [View full packet →](/rme/)
+
+---
+
 # RME Translation Guide: Deployment Pipeline to Manufacturing Ops
 
 ## Purpose

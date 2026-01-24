@@ -73,3 +73,10 @@ This repository includes a cryptographic deployment verification system that ens
 
 **Implementation:** See `Makefile` and `scripts/validation/remote_audit.sh`.
 
+### RME Engineering
+
+📋 **RME Packet – Ready Links**  
+Consolidated reference for RME Process Assistant / RME Tech mobility applications. Includes diagnostic runbooks, translation frameworks, threat models, and 3-minute demo script.  
+*RME | Career Mobility | Systems Thinking*  
+[View Packet →](https://timothywheels.com/docs/RME_PACKET_READY_LINKS.md)
+
